@@ -14,22 +14,11 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'El usuario ya existe' });
     }
 
-    //console log
-    // console.log('Contraseña original:', password);
-
-    // Crear el usuario
-    // const hashedPassword = await bcrypt.hash(password, 10);
-
-    // // Incluir un console.log para ver la contraseña encriptada
-    // console.log('Contraseña encriptada:', hashedPassword);
 
     const user = await User.create({
       email,
       password, // Se guarda la contraseña encriptada
     });
-
-    // Incluir un console.log para ver la contraseña encriptada
-    // console.log('Contraseña encriptada2:', hashedPassword);
 
     res.status(201).json({ message: 'Usuario registrado con éxito', user });
   } catch (error) {
@@ -48,16 +37,8 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Usuario no encontrado' });
     }
 
-    // Incluir un console.log para verificar la contraseña proporcionada y la contraseña almacenada
-    // console.log('Contraseña proporcionada:', password);
-    // console.log('Contraseña almacenada (hash):', user.password);
-
     // Verificar la contraseña
     const isMatch = await bcrypt.compare(password, user.password);
-
-    // Incluir un console.log para verificar si las contraseñas coinciden
-    // console.log('¿Contraseñas coinciden?:', isMatch);
-
     if (!isMatch) {
       return res.status(400).json({ error: 'Contraseña incorrecta' });
     }
